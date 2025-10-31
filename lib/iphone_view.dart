@@ -7,26 +7,40 @@ class DragLiquidGlass extends StatefulWidget {
 }
 
 class _DragLiquidGlassState extends State<DragLiquidGlass> {
-  Offset position = const Offset(50, 550);
+  Offset position = const Offset(50, 200); // starting position
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          // Background image
+          // Full screen background image
           SizedBox.expand(
             child: Image.asset('lib/assets/download.jpg', fit: BoxFit.cover),
           ),
 
           // Draggable LiquidGlass
-          Center(
-            child: Positioned(
+          Positioned(
+            left: position.dx,
+            top: position.dy,
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onPanUpdate: (details) {
+                setState(() {
+                  position += details.delta;
+                });
+              },
               child: LiquidGlass.withOwnLayer(
                 settings: LiquidGlassSettings(
                   thickness: 40.0,
-                  blur: 20.0,
-                  lightAngle: 0.0,
+                  blur: 0,
+                  // lightAngle: 0.0,
+                  // lightIntensity: 5,
+                  // ambientStrength: 10,
+                  // refractiveIndex: 1.0,
+                  // saturation: 2,
+                  // visibility: 2,
+                  chromaticAberration: 3,
                   glassColor: const Color.fromARGB(30, 145, 125, 125),
                 ),
                 shape: LiquidRoundedSuperellipse(borderRadius: 25.0),
