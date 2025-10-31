@@ -12,35 +12,25 @@ class _DragLiquidGlassState extends State<DragLiquidGlass> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       body: Stack(
         children: [
-          Positioned.fill(
+          // Background image
+          SizedBox.expand(
             child: Image.asset('lib/assets/download.jpg', fit: BoxFit.cover),
           ),
 
-          Positioned(
-            left: position.dx,
-            top: position.dy,
-            child: GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onPanUpdate: (details) {
-                setState(() {
-                  position += details.delta;
-                });
-              },
-              child: LiquidGlass(
-                shape: LiquidRoundedSuperellipse(
-                  borderRadius: Radius.circular(25),
-                ),
-                settings: const LiquidGlassSettings(
-                  thickness: 30,
-                  blur: 0,
+          // Draggable LiquidGlass
+          Center(
+            child: Positioned(
+              child: LiquidGlass.withOwnLayer(
+                settings: LiquidGlassSettings(
+                  thickness: 40.0,
+                  blur: 20.0,
                   lightAngle: 0.0,
-                  blend: 0,
-                  glassColor: Color.fromARGB(30, 145, 125, 125),
+                  glassColor: const Color.fromARGB(30, 145, 125, 125),
                 ),
-                child: SizedBox(width: 250, height: 200),
+                shape: LiquidRoundedSuperellipse(borderRadius: 25.0),
+                child: const SizedBox(width: 300, height: 300),
               ),
             ),
           ),
